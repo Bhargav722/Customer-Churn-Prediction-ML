@@ -106,6 +106,45 @@ Non-predictive identifiers such as customer ID are removed during training to en
 
 The application is designed to be intuitive, stable, and suitable for live demonstration.
 
+
+
+## Project Structure
+
+```bash
+Customer-Churn-Prediction/
+│
+├── .streamlit/
+│   └── config.toml
+│       # Streamlit configuration settings (theme, layout, etc.)
+│
+├── data/
+│   └── telco_churn.csv
+│       # Raw dataset used for training and evaluation
+│
+├── models/
+│   └── model.pkl
+│       # Trained machine learning model saved using Joblib
+│
+├── notebook/
+│   └── model_training.ipynb
+│       # Jupyter notebook containing EDA, preprocessing, and model training
+│
+├── report/
+│   ├── model_evaluation_report.md
+│   │   # Model performance metrics and observations
+│   └── report.tex
+│       # LaTeX source for the final project report
+│
+├── app.py
+│   # Streamlit web application for churn prediction
+│
+├── README.md
+│   # Project documentation
+│
+└── requirements.txt
+    # Python dependencies required to run the project
+```
+
 ## 👥 Team Members
 
 * Rudraksh Rathod - 2401010396
