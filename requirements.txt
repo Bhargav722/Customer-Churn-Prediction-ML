@@ -5,3 +5,10 @@ scikit-learn
 joblib
 plotly
 statsmodels
+langchain
+langchain-community
+pypdf
+google-generativeai
+python-dotenv
+chromadb
+langchain-google-genai

@@ -5,6 +5,8 @@ import joblib
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+from utils.llm import get_llm_response
+from rag.pdf_loader import get_strategy_text
 
 st.set_page_config(
     page_title="Customer Churn Prediction",
@@ -425,7 +427,14 @@ with tab2:
 
     st.divider()
 
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = []
+        
     if st.button("🔍  Predict Churn Risk", use_container_width=True, type="primary"):
+        st.session_state.predict_clicked = True
+        st.session_state.chat_history = []
+
+    if st.session_state.get("predict_clicked", False):
         features = np.array([[
             encode("gender", gender),
             1 if senior_citizen == "Yes" else 0,
@@ -512,3 +521,37 @@ with tab2:
         for i, (k, v) in enumerate(items):
             col = [s1, s2, s3][i % 3]
             col.markdown(f"**{k}:** {v}")
+            
+        st.divider()
+        st.markdown("### 💬 Agentic AI Chat")
+        st.markdown("Converse with the Retention AI to explore tailored strategies for this customer.\n*Ask for a summary, discount combinations, or specific tech support scripts.*")
+        
+        # Display Chat History
+        for msg in st.session_state.chat_history:
+            role = "user" if msg[0] == "human" else "assistant"
+            with st.chat_message(role):
+                st.markdown(msg[1])
+
+        # Chat Input
+        if user_prompt := st.chat_input("Ask the Retention Agent..."):
+            
+            # Show user message instantly
+            with st.chat_message("user"):
+                st.markdown(user_prompt)
+            
+            st.session_state.chat_history.append(("human", user_prompt))
+            
+            # Show AI response
+            with st.chat_message("assistant"):
+                with st.spinner("Agent computing..."):
+                    try:
+                        profile_str = "\n".join([f"- {k}: {v}" for k, v in profile.items()])
+                        from utils.llm import chat_with_agent
+                        
+                        # Generate response through RAG chain
+                        ai_response = chat_with_agent(user_prompt, st.session_state.chat_history, profile_str)
+                        st.markdown(ai_response)
+                        
+                        st.session_state.chat_history.append(("ai", ai_response))
+                    except Exception as e:
+                        st.error(f"Agent experienced an error: {str(e)}")
