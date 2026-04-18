@@ -362,7 +362,7 @@ with tab1:
         return f"color: {c}; font-weight: 600"
 
     st.dataframe(
-        show_df.style.applymap(colour_label, subset=["Churn_Label"]),
+        show_df.style.map(colour_label, subset=["Churn_Label"]),
         use_container_width=True,
         height=360,
     )
@@ -381,7 +381,7 @@ with tab1:
         st.info("No high-risk customers found with the current filters.")
     else:
         st.dataframe(
-            high_risk_disp.style.applymap(colour_label, subset=["Churn_Label"]),
+            high_risk_disp.style.map(colour_label, subset=["Churn_Label"]),
             use_container_width=True,
             height=320,
         )
