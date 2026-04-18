@@ -50,3 +50,4 @@ def chat_with_agent(question, chat_history, context_profile_str):
     
     response = retrieval_chain.invoke({"input": question, "chat_history": chat_history})
     return response["answer"]
+
