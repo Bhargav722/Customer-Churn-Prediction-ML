@@ -1,152 +1,153 @@
-# Customer Churn Prediction using Machine Learning
+# Agentic Customer Retention Assistant 📊🤖
 
-## Project Overview
+A professional-grade, hybrid AI system that combines **Classic Machine Learning** with **Agentic RAG (Retrieval-Augmented Generation)** to predict customer churn and provide autonomous, evidence-based retention strategies in real-time.
 
-This project focuses on the design and implementation of a machine learning–based customer churn prediction system using historical customer behavior data. The objective is to identify customers who are likely to discontinue services and provide actionable insights that support data-driven retention strategies.
-The system uses classical supervised learning techniques and provides an interactive web interface for real-time churn prediction and analysis.
+---
 
-## Problem Motivation
+## 🌟 Project Overview
 
-Customer churn is a major challenge in subscription-based industries such as telecommunications. Customers may leave due to multiple factors including contract type, service usage, billing patterns, and tenure.
+This system goes beyond standard churn prediction by evolving into a sophisticated **Retention Strategist Agent**. It operates in two primary phases:
 
-Accurately predicting churn allows organizations to:
-- Identify high-risk customers early
-- Reduce revenue loss
-- Design targeted retention strategies
+1.  **ML Churn Prediction Engine**: A high-performance **Random Forest Classifier** that analyzes customer demographics, account details, and service usage to calculate an accurate churn probability.
+2.  **Agentic AI Reporting (RAG)**: A LangChain-orchestrated workflow that retrieves localized retention best practices and company policies to generate personalized, actionable health reports for high-risk customers.
 
-This project models churn as a **binary classification problem** using structured customer data.
+---
 
+## 🏗️ System Architecture
 
-## Project Structure
+```mermaid
+flowchart TD
+    subgraph Input_Layer ["1. Customer Data Layer"]
+        A[Customer Profile<br/><small>Service, Account, Demo</small>]
+    end
 
-## Technology Stack
+    subgraph ML_Engine ["2. ML Prediction Engine"]
+        B[Label Encoding & Preprocessing]
+        C[Random Forest Classifier<br/><small>Predicts Churn Probability</small>]
+    end
 
-| Component                | Technology                          |
-| ------------------------ | ----------------------------------- |
-|   Programming Language** | Python                              |
-|   ML Framework**         | Scikit-learn                        |
-|   Model Used**           | Logistic Regression / Random Forest |
-|   Data Processing**      | Pandas, NumPy                       |
-|   Web Interface**        | Streamlit                           |
-|   Model Persistence**    | Joblib                              |
-|   Deployment Platform**  | Streamlit Cloud                     |
+    subgraph RAG_Pipeline ["3. Knowledge Retrieval (RAG)"]
+        D[(ChromaDB<br/>Vector Store)]
+        E[Industry Best Practices]
+        F[Company Retention Policies]
+        G[Query Embedding<br/><small>Google Gemini 001</small>]
+    end
 
-## System Architecture
+    subgraph Agentic_Orchestration ["4. Agentic AI (LangChain)"]
+        H[Context Assembly]
+        I[Retrieval-Augmented Reasoning]
+        J[Generation Node<br/><small>Gemini-2.5-Flash-Lite</small>]
+    end
 
-1. **Data Ingestion**
-   - CSV-based dataset upload
-   - Schema validation
+    subgraph Interaction_Layer ["5. User Interface"]
+        K[Streamlit Dashboard]
+        L[Personalized Retention Plan]
+        M[Conversational Assistant<br/><small>Follow-up QA</small>]
+    end
 
-2. **Preprocessing Pipeline**
-   - Encoding of categorical features
-   - Scaling of numerical features
-   - Unified pipeline for training and inference
-
-3. **Model Training**
-   - Train–test data split
-   - Supervised classification model
-   - Hyperparameter-controlled learning
-
-4. **Prediction & Visualization**
-   - Real-time churn probability prediction
-   - Binary churn classification
-   - Interactive data filtering and visualization
-
-#### Milestones & Deliverables
-
-### Milestone 1: ML-Based Churn Prediction (Mid-Sem)
-
-**Objective:**  
-Develop an end-to-end churn prediction pipeline using classical machine learning techniques.
-
-**Deliverables:**
-- Problem formulation and dataset analysis  
-- Feature engineering and preprocessing pipeline  
-- Trained churn prediction model  
-- Model evaluation using standard metrics  
-- Streamlit-based interactive web application  
-- Well-structured GitHub repository  
-
-### Milestone 2: Agentic AI–Based Retention Assistant (End-Sem)
-
-**Objective:**  
-Extend the churn prediction system into an **agentic retention assistant** that autonomously reasons over churn risk, customer segments, and historical best practices to generate **structured, actionable retention recommendations**.
-
-**Scope & Capabilities:**
-- Analyze predicted churn probabilities and customer profiles
-- Identify high-risk customer segments using rule-based reasoning
-- Retrieve predefined retention strategies and best-practice policies
-- Generate structured recommendations (offers, service actions, follow-ups)
-- Provide explainable reasoning for each suggested retention action
-
-**Key Outcomes:**
-- Transition from prediction-only analytics to decision-support intelligence
-- Demonstrate autonomous reasoning and strategy selection
-- Enable scenario-based retention planning for business users
-
-**Note:**  
-This milestone builds upon the classical ML foundation developed in Milestone 1 and introduces agentic reasoning for decision support as part of the end-semester extension.
-
-## Dataset Description
-
-- **Dataset:** Telco Customer Churn Dataset  
-- **Records:** ~7,000 customers  
-- **Features:** Demographic details, service usage, billing information  
-- **Target Variable:** Churn (Yes / No)
-
-Non-predictive identifiers such as customer ID are removed during training to ensure model integrity.
-
-## Web Application Features
-  
-- Interactive sidebar filters for customer segmentation  
-- Dataset preview and summary statistics  
-- Real-time churn probability prediction  
-- Binary churn classification  
-- Downloadable prediction results  
-
-The application is designed to be intuitive, stable, and suitable for live demonstration.
-
-
-
-## Project Structure
-
-```bash
-Customer-Churn-Prediction/
-│
-├── .streamlit/
-│   └── config.toml
-│       # Streamlit configuration settings (theme, layout, etc.)
-│
-├── data/
-│   └── telco_churn.csv
-│       # Raw dataset used for training and evaluation
-│
-├── models/
-│   └── model.pkl
-│       # Trained machine learning model saved using Joblib
-│
-├── notebook/
-│   └── model_training.ipynb
-│       # Jupyter notebook containing EDA, preprocessing, and model training
-│
-├── report/
-│   ├── model_evaluation_report.md
-│   │   # Model performance metrics and observations
-│   └── report.tex
-│       # LaTeX source for the final project report
-│
-├── app.py
-│   # Streamlit web application for churn prediction
-│
-├── README.md
-│   # Project documentation
-│
-└── requirements.txt
-    # Python dependencies required to run the project
+    %% Connections
+    A --> B
+    B --> C
+    C --> |Churn Probability| H
+    
+    E & F --> |PDF Ingestion| D
+    
+    H --> I
+    I <--> |Similarity Search| D
+    I --> J
+    J --> |Structured Markdown| L
+    
+    L --> M
+    M <--> |Chat History| J
+    K <==> A & L & M
 ```
+
+---
+
+## 🚀 Key Features
+
+- **Hybrid Retention Pipeline**: Combines statistical churn modeling with discrete classification for a nuanced customer perspective.
+- **Evidence-Based RAG**: Unlike generic LLMs, this agent grounds its advice in a verified knowledge base of retention strategies, citing specific policies directly.
+- **Explainable AI**: Provides clear reasoning for why a customer is likely to churn and what specific offers are most likely to retain them.
+- **Conversational Follow-ups**: A stateful chat interface allows business managers to ask clarifying questions (e.g., "What specific offer can I give to reduce their monthly bill?").
+- **Modern UI**: Implemented with a sleek, responsive Streamlit interface and custom CSS for a premium feel.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Orchestration**: LangChain
+- **LLM Engine**: Google Gemini-2.5-Flash-Lite
+- **Vector Database**: ChromaDB
+- **Embeddings**: Google Gemini (`gemini-embedding-001`)
+- **ML Frameworks**: Scikit-Learn, Pandas, NumPy
+- **Frontend**: Streamlit + Custom CSS
+- **Deployment**: Streamlit Cloud
+
+---
+
+## 📂 Project Structure
+
+```text
+├── data/                       # Raw customer datasets (Telco Churn)
+├── models/                     # Serialized ML models (model.pkl)
+├── rag/                        # RAG & Vector Store Implementation
+│   ├── pdf_loader.py           # Document ingestion logic
+│   └── vector_store.py         # ChromaDB setup and retrieval
+├── knowledge/                  # Strategy PDFs & Knowledge Base
+├── report/                     # Evaluation metrics & final reports
+├── utils/                      # Agent & LLM helper functions
+├── notebook/                   # EDA & Model Training Notebooks
+├── app.py                      # Main Streamlit Dashboard
+├── requirements.txt            # System dependencies
+└── README.md
+```
+
+---
+
+## ⚙️ Getting Started
+
+Follow these steps to set up and run the project locally.
+
+### 1. Prerequisites
+- Python 3.9 or higher
+- A Google AI Studio API Key (for Gemini)
+
+### 2. Installation
+
+1.  **Clone the Repository**:
+    ```bash
+    git clone https://github.com/Kaustubh0505/Customer-Churn-Prediction-ML.git
+    cd Customer-Churn-Prediction-ML
+    ```
+
+2.  **Create a Virtual Environment**:
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    ```
+
+3.  **Install Dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### 3. Configuration
+
+1.  **Environment Variables**:
+    Create a `.env` file in the root directory and add your Google API key:
+    ```bash
+    GOOGLE_API_KEY=your_google_api_key_here
+    ```
+    *You can get your API key from the [Google AI Studio](https://aistudio.google.com/app/apikey).*
+
+---
 
 ## 👥 Team Members
 
-* Rudraksh Rathod - 2401010396
-* Kaustubh Hiwanj - 2401010217
-* Bhargav Patil - 2401020092
+- **Rudraksh Rathod** - 2401010396
+- **Kaustubh Hiwanj** - 2401010217
+- **Bhargav Patil** - 2401020092
+
+---
+*📊 **Disclaimer**: This tool is designed for business decision support and informational purposes. Performance depends on the quality of historical data and the provided strategy knowledge base.*
