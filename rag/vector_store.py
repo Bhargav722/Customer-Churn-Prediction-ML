@@ -12,7 +12,7 @@ PDF_PATH = "knowledge/strategies.pdf"
 
 def get_vectorstore():
     api_key = os.getenv("GOOGLE_API_KEY")
-    embeddings = GoogleGenerativeAIEmbeddings(model="gemini-embedding-001", google_api_key=api_key)
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001", google_api_key=api_key)
     
     if os.path.exists(CHROMA_DIR) and len(os.listdir(CHROMA_DIR)) > 0:
         vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)

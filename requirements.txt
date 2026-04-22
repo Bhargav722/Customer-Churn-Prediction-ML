@@ -13,3 +13,4 @@ python-dotenv
 chromadb
 langchain-google-genai
 protobuf==3.20.3
+langgraph
